@@ -1,4 +1,4 @@
-# Know Thyself v0.4
+# Know Thyself v2.0
 
 This a simplistic choose-your-adventure game where you are presented with multiple actions on different scenarios with an overarching and branching story. 
 By the end of the story your chosen actions will determine what alignment you fall onto in the [Alignment Chart](https://en.wikipedia.org/wiki/Alignment_(Dungeons_%26_Dragons)).
