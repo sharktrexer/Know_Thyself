@@ -8,7 +8,7 @@ This software is currently in production, with 3 major versions planned:
 
 - **Prototype (v1.0)**
 
-Simple terminal project that allows for options in the story to be selected via terminal input. Kept [here](https://github.com/sharktrexer/Know_Thyself/tree/prototype) to be archived in the future, but for now recieves updates until fully completed.
+Simple terminal project that allows for options in the story to be selected via terminal input. Kept here recieving updates until fully completed (full details [there](https://github.com/sharktrexer/Know_Thyself_Prototype))
 
 - **Web App Frontend (v2.0)**
 
@@ -17,4 +17,4 @@ Simple terminal project that allows for options in the story to be selected via 
   - Currently: A front and backend web service skeleton to build for completed prototype logic to be contained in.
 
 - **Story Editor Update (v2.5)**
-An ability to create and write your own branching stories that you can play through yourself or share with others! This one is a big ***MAYBE.***
+An ability to create and write your own branching stories that you can play through yourself or share with others! This won't be a separate project but an update to this one. This one is a big ***MAYBE.***
