@@ -17,4 +17,4 @@ Simple terminal project that allows for options in the story to be selected via 
   - Currently: A front and backend web service skeleton to build for completed prototype logic to be contained in.
 
 - **Story Editor Update (v2.5)**
-An ability to create and write your own branching stories that you can play through yourself or share with others! This won't be a separate project but an update to this one. This one is a big ***MAYBE.***
+An ability to create and write your own branching stories that you can play through yourself or share with others! Will most likely connect to a database to store the stories. This won't be a separate project but an update to this one. This one is a big ***MAYBE.***
