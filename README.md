@@ -1,6 +1,6 @@
 # Know Thyself v2.0
 
-This a simplistic choose-your-adventure web app where you are presented with multiple actions on different scenarios with an overarching and branching story. 
+This a simplistic choose-your-adventure web app where you are presented with multiple actions in different scenarios with an overarching and branching story. 
 By the end of the story your chosen actions will determine what alignment you fall onto in the [Alignment Chart](https://en.wikipedia.org/wiki/Alignment_(Dungeons_%26_Dragons)).
 **Will you get the result you think you will?**
 
