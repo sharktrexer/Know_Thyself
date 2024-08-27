@@ -14,4 +14,23 @@ public class WebController {
 		model.addAttribute("name", name);
 		return "greeting";
 	}
+	
+	@GetMapping("/")
+	public String home( Model model) {
+
+		return "index.html";
+	}
+	
+	@GetMapping("/play")
+	public String play( Model model) {
+
+		return "play.html";
+	}
+	
+	@GetMapping("/about")
+	public String about(Model model) {
+		
+		return "about.html";
+	}
+	
 }

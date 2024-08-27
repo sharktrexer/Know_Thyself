@@ -1,19 +1,13 @@
 <!DOCTYPE HTML>
 
-<html xmlns:th="http://www.thymeleaf.org">
+<html layout:decorate="layouts/default">
 
-	<head> 
-	    <title>Know Thyself</title> 
-	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	    <link rel="stylesheet" href="/styles.css">
-	</head>
 	
-	<body>
-	    <p>Get your greeting <a href="/greeting?name=lol">here</a></p>
+	
+	<body layout:fragment="content">
+	    <p class="content">Get your greeting <a href="/greeting?name=lol">here</a></p>
 	</body>
 	
-	<footer>
-		<p th:class="subdued-text">By Ibrahim Sydock</p>
-	</footer>
+	
 	
 </html>

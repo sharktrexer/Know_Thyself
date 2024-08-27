@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head> 
+	    <title>Know Thyself</title> 
+	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	    <link rel="stylesheet" href="/styles.css">  
+	</head>
+	
+<body>
+
+	<!-- Header -->
+	<div th:replace="~{/layouts/navbar :: header}">header goes here</div>
+	
+	<!-- Content -->
+	<section layout:fragment="content">
+	<p>Replace this with page that has layout:fragment="content"</p>
+	</section>
+	
+	
+	<!-- Footer -->
+	<div th:replace="~{/layouts/basicFooter :: footer}">footer goes here</div>
+
+</body>
+
+</html>
