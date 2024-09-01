@@ -29,6 +29,12 @@ public class WebController {
 		return "play.html";
 	}
 	
+	@GetMapping("/test")
+	public String test( Model model) {
+		
+		return "bootstraptest.html";
+	}
+	
 	@GetMapping("/play1")
 	public ModelAndView displayStory() {
 		
