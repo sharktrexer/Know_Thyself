@@ -5,10 +5,28 @@
 	
 	
 	<body layout:fragment="content">
-	    <p class="text-page">this is where the game is played</p>
-	    <p th:text="${scene_desc}"></p>
-	    <p th:text="${options}"></p>
-	    <p th:text="${result}"></p>
+	    <p class="text-page" th:text="${scene_desc}">this is where the game is played</p>
+	    
+	    <ol >
+	    <!-- TODO
+	    for loop through available options and display that many list items
+	     -->
+			<li class="list-item" th:text="${options}">
+				Lorem ipsum dolor sit amet
+			</li>
+			<li class="list-item">
+				Consectetur adipiscing elit
+			</li>
+			<li class="list-item">
+				Integer molestie lorem at massa
+			</li>
+			<li class="list-item">
+				Facilisis in pretium nisl aliquet
+			</li>
+		</ol> 
+		
+		<p class="text-page" th:text="${result}"></p>
+		
 	</body>
 	
 	

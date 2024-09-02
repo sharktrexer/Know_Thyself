@@ -1,1 +1,41 @@
-# Empty CSS file for your own CSS
+
+.subdued-text {
+	color: gray;
+}
+
+footer {
+	position: fixed;
+	bottom: 0;
+}
+
+.text-page {
+	
+	padding-top: 200px;
+	text-align: center;
+}
+
+.top-nav {
+	width: 100%;
+	
+	position: fixed;
+	top: 0;
+	left: 0;
+	
+	background-color: DarkGreen;
+	font-size: 15px;
+}
+
+.top-nav a {
+	position: static;
+	
+	display: inline-block;
+   	width: 100px;
+   	height: 55px;
+
+   	color: white;
+
+   	text-align: center;
+   	line-height: 55px;
+
+   	text-decoration: none;
+}
