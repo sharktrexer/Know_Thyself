@@ -7,25 +7,17 @@
 	<body layout:fragment="content">
 	    <p class="text-page" th:text="${scene_desc}">this is where the game is played</p>
 	    
-	    <ol >
-	    <!-- TODO
-	    for loop through available options and display that many list items
-	     -->
-			<li class="list-item" th:text="${options}">
-				Lorem ipsum dolor sit amet
-			</li>
-			<li class="list-item">
-				Consectetur adipiscing elit
-			</li>
-			<li class="list-item">
-				Integer molestie lorem at massa
-			</li>
-			<li class="list-item">
-				Facilisis in pretium nisl aliquet
-			</li>
-		</ol> 
-		
-		<p class="text-page" th:text="${result}"></p>
+	    <th:block th:each="option, stat: ${options}" th:start="option.">
+	    
+		    <ol th:start="${stat.index} + 1">
+		    
+				<li class="list-item" th:text="${option}">
+					Lorem ipsum dolor sit amet
+				</li>
+			
+			</ol> 
+		</th:block>
+		<p th:text="${result}"></p>
 		
 	</body>
 	
