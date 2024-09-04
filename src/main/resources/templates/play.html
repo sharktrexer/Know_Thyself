@@ -7,7 +7,28 @@
 	<body layout:fragment="content">
 	    <p class="text-page" th:text="${scene_desc}">this is where the game is played</p>
 	    
-	    <th:block th:each="option, stat: ${options}" th:start="option.">
+		<div class="center"> 
+		
+			<form action="" method="get">
+				<th:block   th:each="option, stat: ${options}" th:start="option.">
+					<!-- TODO: force first radio button to be checked -->
+						<div>
+							<input class="form-check-input" type="radio" th:value="option + ${stat.index}" name="flexRadioDefault" id="flexRadioDefault1">
+							<label class="form-check-label" for="flexRadioDefault1" th:text="${option}">
+						    Default radio
+						    </label>
+					    </div>
+				</th:block>
+				
+				<p class="center" th:text="${result}"></p>
+				
+				<div>
+		      		<button type="submit">Submit</button>
+		    	</div>
+	    	</form>
+		</div>
+	    
+	    <!-- <th:block th:each="option, stat: ${options}" th:start="option.">
 
 			    <ol class="center" th:start="${stat.index} + 1">
 			    	
@@ -17,21 +38,13 @@
 				
 				</ol>  
 			
-		</th:block>
+		</th:block> -->
 		
-		<p class="center" th:text="${result}"></p>
+		
 	
-	<div class="center"> 
-		<th:block  class="form-check"  th:each="option, stat: ${options}" th:start="option.">
-				
-				<div>
-					<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-					<label class="form-check-label" for="flexRadioDefault1" th:text="${option}">
-				    Default radio
-				    </label>
-			    </div>
-		</th:block>
-	</div>
+	
+	
+	
 	</body>
 	
 	
