@@ -23,12 +23,10 @@ public class WebController {
 		return "about.html";
 	}
 	
-	@GetMapping("/play")
-	public String play( Model model) {
-		model.addAttribute("scene_desc", "this is where scenario desc is displayed");
-		model.addAttribute("options", "this is where each option is displayed");
-		model.addAttribute("result", "this is where the result of an option is displayed if applicable");
-		return "play.html";
+	@GetMapping("/error")
+	public String error( Model model) {
+		
+		return "error";
 	}
 	
 	@GetMapping("/test")
@@ -37,7 +35,7 @@ public class WebController {
 		return "bootstraptest.html";
 	}
 	
-	@GetMapping("/play1")
+	@GetMapping("/play")
 	public ModelAndView displayStory() {
 		
 		ModelAndView mv = new ModelAndView();
