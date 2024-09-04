@@ -44,7 +44,7 @@ public class WebController {
 		test.add("test 1");
 		test.add("test 2");
 		test.add("test 3");
-		test.add("test 4");
+		test.add("test 4 test 4 test 4 test 4 test 4 test 4 test 4");
 		
 		mv.addObject("scene_desc", "this is where scenario desc is displayed");
 		mv.addObject("options", test);
