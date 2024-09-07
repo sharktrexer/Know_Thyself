@@ -14,13 +14,13 @@ public class WebController {
 	@GetMapping("/")
 	public String home( Model model) {
 
-		return "index.html";
+		return "index";
 	}
 	
 	@GetMapping("/about")
 	public String about(Model model) {
 		
-		return "about.html";
+		return "about";
 	}
 	
 	@GetMapping("/error")
@@ -29,10 +29,12 @@ public class WebController {
 		return "error";
 	}
 	
-	@GetMapping("/test")
-	public String test( Model model) {
+	@GetMapping("/results")
+	public String results( Model model) {
 		
-		return "bootstraptest.html";
+		model.addAttribute("alignment", "Lawful Good");
+		
+		return "results";
 	}
 	
 	@GetMapping("/play")
