@@ -17,17 +17,18 @@
 								type="radio" 
 								th:value="option + ${stat.index}" 
 								name="radioOp" 
-								th:id="radioOp + ${stat.index}">
+								th:id="radioOp + ${stat.index}"
+								th:checked="${stat.index} == 0 ">
 							<label class="form-check-label" th:for="radioOp + ${stat.index}" th:text="${option}">
 						    Default radio
 						    </label>
 					    </div>
 				</th:block>
 				
-				<p class="center" th:text="${result}"></p>
+				<p class="center ex-margin" th:text="${result}"></p>
 				
 				<div>
-		      		<button type="submit">Submit</button>
+		      		<button class="ex-margin" type="submit">Submit</button>
 		    	</div>
 	    	</form>
 		</div>
