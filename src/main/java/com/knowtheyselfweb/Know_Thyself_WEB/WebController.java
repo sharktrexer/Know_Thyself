@@ -37,23 +37,22 @@ public class WebController {
 		return "results";
 	}
 	
-	@GetMapping("/play")
-	public ModelAndView displayStory() {
-		
-		ModelAndView mv = new ModelAndView();
-		
-		ArrayList<String> test = new ArrayList<>();
-		test.add("test 1");
-		test.add("test 2");
-		test.add("test 3");
-		test.add("test 4 test 4 test 4 test 4 test 4 test 4 test 4");
-		
-		mv.addObject("scene_desc", "this is where scenario desc is displayed");
-		mv.addObject("options", test);
-		mv.addObject("result", "this is where the result of an option is displayed if applicable");
-		mv.setViewName("play");
-		return mv;
-	}
+	
+	  @GetMapping("/play") public ModelAndView displayStory() {
+	  
+		  ModelAndView mv = new ModelAndView();
+		  
+		  ArrayList<String> test = new ArrayList<>(); test.add("test 1");
+		  test.add("test 2"); test.add("test 3");
+		  test.add("test 4 test 4 test 4 test 4 test 4 test 4 test 4");
+		  
+		  mv.addObject("scene_desc", "this is where scenario desc is displayed");
+		  mv.addObject("options", test); 
+		  mv.addObject("result", "this is where the result of an option is displayed if applicable");
+		  mv.setViewName("play"); 
+		  return mv; 
+	  }
+	 
 
 	
 }
