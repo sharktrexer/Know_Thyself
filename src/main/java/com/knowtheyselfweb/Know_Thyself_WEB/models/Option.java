@@ -94,4 +94,11 @@ public class Option {
 		this.resultDesc   = "";
 		this.isShown	  = false;
 	}
+
+	@Override
+	public String toString() {
+		return desc ;
+	}
+	
+	
 }

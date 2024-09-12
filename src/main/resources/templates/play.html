@@ -3,14 +3,15 @@
 <html layout:decorate="~{layouts/default}">
 
 	
+	<!-- to show option consequences: hide everything except the result desc? show new button that submits a different string-->
 	
 	<body layout:fragment="content">
 	    <p class="text-page" th:text="${scene_desc}">this is where the game is played</p>
 	    
 		<div class="center"> 
 		
-			<form action="" method="get">
-				<th:block   th:each="option, stat: ${options}" th:start="option.">
+			<form action="play" method="get">
+				<th:block   th:each="option, stat: ${options}" >
 					<!-- TODO: force first radio button to be checked -->
 						<div>
 							<input class="form-check-input" 
@@ -28,7 +29,7 @@
 				<p class="center ex-margin" th:text="${result}"></p>
 				
 				<div>
-		      		<button class="ex-margin" type="submit">Submit</button>
+		      		<button class="ex-margin" type="submit">Continue</button>
 		    	</div>
 	    	</form>
 		</div>

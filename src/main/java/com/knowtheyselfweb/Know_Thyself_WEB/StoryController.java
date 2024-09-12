@@ -19,13 +19,35 @@ public class StoryController {
 	//TODO turn into dependency injection
 	StoryService service = new StoryService();
 	
-	//will become dependency injection i guess
 	ArrayList<Scenario> scenes = service.getStory();
 	
+	Scenario curScene = scenes.get(0);
+	
+	@GetMapping("/playStart")
+	public String startStory(Model model) {
+		
+		Scenario beginning = scenes.get(0);
+		
+		model.addAttribute("scene_desc", beginning.getDesc());
+		model.addAttribute("options", beginning.getOptions());
+		
+		return "play.html";
+	}
+	
 	@GetMapping("/play1")
-	public String displayNextScene(@RequestParam(defaultValue = "") String option, Model model) {
+	public String displayNextScene(@RequestParam(required = true) String radioOp, Model model) {
 		
+		// Get option index from radio form input
+		int option = Integer.parseInt(radioOp.substring(6, radioOp.length()));
+		System.out.println(option);
 		
+		/*
+		 * If radioOp empty: get 1st scenario
+		 * otherwise use radioOp to choose an option and get the scenario it points to
+		 * display scenario data
+		 * consequences of option needs to be displayed somehow, with chosen option being saved and used to display next scenario
+		*/
+		//System.out.println(radioOp);
 		
 		return "play.html";
 	}
