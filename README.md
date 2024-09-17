@@ -7,5 +7,5 @@ By the end of the story your chosen actions will determine what alignment you fa
 This web app is currently in production. It utilizes Spring Boot & Thymeleaf framework and Bootstrap libraries, containing various informative pages and a way to play the short story game that can be found [here](https://github.com/sharktrexer/Know_Thyself_Prototype)
 
 ### Instructions 
-TBD. Planning to deploy on GitHub Pages when fully functional.
+TBD. 
 
