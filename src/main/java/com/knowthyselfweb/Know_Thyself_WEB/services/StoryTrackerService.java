@@ -6,10 +6,13 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.knowtheyselfweb.Know_Thyself_WEB.models.*;
 
+@Service
 public class StoryTrackerService {
-	// Story Vars
+	// TODO implement achievement system into this version
 	//final static AccomplishmentTracker TRACKER = new AccomplishmentTracker(AccomplishmentBuilder.copStoryAccomps);
 	//final static List<Scenario> STORY_SCENES = ScenarioBuilder.copStory;
 	
@@ -23,18 +26,124 @@ public class StoryTrackerService {
 	final static String[] alignments = new String[] {
 			"LG", "NG", "CG", "LN", "TN", "CN", "LE", "NE", "CE" };
 	
-	public final static String[] alignmentsFull = new String[] {
+	final static String[] alignmentsFull = new String[] {
 			"Lawful Good", "Neutral Good", "Chaotic Good", 
 			"Lawful Neutral", "True Neutral", "Chaotic Neutral", 
 			"Lawful Evil", "Neutral Evil", "Chaotic Evil" };
 	
+	// Game vars
+	List<Scenario> curStory;
+	boolean end = false;
+	//String endingId = "";
+	int index;	
 	
+	// Per Scenario vars
+	Scenario 	 curScene;
+	List<Option> availOptions;
 	
-	// Launch point
-	/*
-	 * public static void main(String[] args) { // Game logic
-	 * PlayScenario(STORY_SCENES, TRACKER); }
-	 */
+	Option chosenOp;
+	String nextSceneID;
+	boolean onlyTransition = false;
+	
+	public StoryTrackerService( ArrayList<Scenario> scenes) {
+		curStory = scenes;
+		index = 0;
+		curScene = curStory.get(0);
+		availOptions = curScene.getOptions();
+		onlyTransition = false;
+	}
+	
+	public Scenario GetCurrentScene() {
+		return curScene;
+	}
+	
+	public List<Option> GetAvailOptions() {
+		return availOptions;
+	}
+	
+	public boolean IsStoryOver() {
+		return end;
+	}
+	
+	public boolean IsOnlyTransition() {
+		return onlyTransition;
+	}
+	
+	public void NextScene(int optionIndex) {
+		
+		// Store chosen option and where to go next
+		chosenOp = availOptions.get(optionIndex);
+		nextSceneID = chosenOp.getPointsToID();
+		
+		// Store  option values to keep track of if not transition
+		if(!onlyTransition) {
+			
+			if(chosenOp.getTagsRequired() != null) {
+				//accomps.addAchievement(chosenOp.getTagsRequired().get(0));
+			}
+			
+			if(chosenOp.getTags() != null) 
+				AddTagsToUser(chosenOp.getTags());
+			
+			if(chosenOp.getAlignment() != null)
+				IncrementAlignment(chosenOp.getAlignment()); // If -1 is returned there is a problem!
+			
+			// TODO display this differently somehow
+			if(chosenOp.getResultDesc() != "")
+				System.out.println("\n" + chosenOp.getResultDesc() + "\n");
+			
+		}
+		
+		// Change scenario
+		int tempInd = index;
+		if(!nextSceneID.equals("")) {
+			for(int i = index; i < curStory.size(); i++) {
+				if(curStory.get(i).getId().equals(nextSceneID)) {
+					index = i;
+					curScene = curStory.get(index);
+					break;
+				}
+			}
+		}
+		
+		/* Don't end the game if there is a tie of alignments! 
+		 * Instead, the game must play through the final and special tie breaker scenario 
+		 * (stored in the last spot of the scenes list)
+		 */
+		if(tempInd == index && index != curStory.size() - 1 && CheckForAlignTies()) {
+			index = curStory.size() - 1;
+			curScene = curStory.get(index);
+		}
+		// End if the index did not change
+		end = tempInd == index;
+		//endingId = curScene.getId();
+
+		if(end) {
+			onlyTransition = true;
+			availOptions = null;
+			return;
+		}
+
+		// Fetch options, and check if these are transition options
+		// there SHOULDN'T be any non-transitional options if the first option is
+		for(Option op : curScene.getOptions()) {
+			
+			// Transition option
+			// Empty tags on transition option means this is the only option anyway
+			boolean conditionsMet = op.getTagsRequired() == null || DoesUserTagsContains(op.getTagsRequired());
+			if(!op.isShown() && conditionsMet) 
+			{
+				availOptions.add(op);
+				onlyTransition = true;
+				break;
+			}
+			// Regular options
+			else if(conditionsMet) {
+				availOptions.add(op);
+				onlyTransition = false;
+			}				
+		}
+	}
 	
 	/* Uses int value of Alignment enum to increment chart score.
 	 * Success: return 1 else -1 */
@@ -92,67 +201,8 @@ public class StoryTrackerService {
 		}
 	}	
 	
-	// Returns number input from user or -1 for input that is not within 1 to maxNum.
-	// Also has cases for special debug commands to print info.
-	private static int ValidatePlayerInput(BufferedReader in, int maxNum) {
-		
-		// Invalid inputs or reader IOExceptions are caught
-		try {
-			String line = in.readLine().strip();
-			
-			// For termination of program
-			if(line.equals("exit")) {
-				System.out.println("Shutting down...");
-				in.close();
-				System.exit(0);
-			}
-			
-			// No detection needed, input is only being used to continue
-			if(maxNum <= 0)
-				return -1;
-			
-			// Assume input is not a valid number given input length is > 1
-			if(line.length() > 1) {
-				// Check for debug commands if input is not a number. Still treated as invalid input 
-				String msg = "";
-				switch(line) {
-				
-					case "tags":
-						System.out.println(userTags);
-						msg = "Received tags Debug Command";
-						break;
-						
-					case "align":
-						System.out.println();
-						for(int i = 0; i < chart.length; i++) {
-							System.out.print(alignments[i] + ": " + chart[i] + " ");
-						}
-						System.out.println();
-						msg = "Received alignment Debug Command";
-						break;
-						
-					default:
-						msg = "Invalid Input";
-						break;
-				}
-				throw new IOException(msg);
-			}
-			
-			// Check for valid number within 0 to maxNum
-			int num = Integer.parseInt(line);
-			if(num < 1 || num > maxNum) {
-				throw new IOException("Invalid Number");
-			}
-			return num;
-		}
-		catch(NumberFormatException | IOException ex) { //Input failed
-			System.out.println("Input did not advance story:\t" + ex.getMessage());
-			return -1;
-		}
-	}
-	
 	// These methods are only for easily getting a list of ending and tag string without having to do it manually. 
-		
+	//{~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	public static List<String> getEndings(List<Scenario> scenes) {
 		List<String> ends = new ArrayList<String>();
 		
@@ -187,17 +237,9 @@ public class StoryTrackerService {
 		System.out.println(ops);
 		return ops;
 	}
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~}	
 	
-	/*
-	 *
-	 * 
-	 * public List<String> getSecretOptions(List<Scenario> scenes) loop through
-	 * every scenario options list, checking for options that require tags and
-	 * isShown == true. skip over tie breaker scenario
-	 * 
-	 * print string required tags
-	 */
-		
+	
 	
 	private static void PlayScenario(List<Scenario> scenes) {
 		
@@ -218,7 +260,7 @@ public class StoryTrackerService {
 					+ "\nIf you somehow are a \"well rounded person\", an alignment tie-breaker scenario will be provided to make sure you "
 					+ "get a specific alignment. \nThis is by no means an accurate experience, it is all just for fun! "
 					+ "\n\nPlease enter anything to begin.");
-			ValidatePlayerInput(in, 0);
+			
 			
 			
 			// Scenario vars
@@ -277,7 +319,7 @@ public class StoryTrackerService {
 					while(input < 0) {
 						
 						System.out.println("\nPlease enter a valid number associated with the above options.");
-						input = ValidatePlayerInput(in, availOptions.size()) - 1;
+						//TODO input entry way
 					}
 					// Store chosen option and its values
 					chosenOp = availOptions.get(input);
@@ -301,7 +343,7 @@ public class StoryTrackerService {
 				// User's choice has been determined already, this is a transition to the next scene
 				else {
 					System.out.println("\nPlease enter anything to continue");
-					ValidatePlayerInput(in, 0);
+					// TODO input entry way
 				}
 				
 				// Change scenario
@@ -326,7 +368,7 @@ public class StoryTrackerService {
 				end = tempInd == index;
 				endingId = curScene.getId();
 			}
-			
+			// TODO entry point for results page
 			//accomps.addAchievement(endingId);
 			
 			System.out.println("Story ended!\n");
@@ -381,7 +423,7 @@ public class StoryTrackerService {
 			}
 			System.out.print(msg + "\n\nEnter anything to see your accomplishments.\n");
 			
-			ValidatePlayerInput(in, 0);
+			
 			
 			System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~Results~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ \n");
 			
@@ -390,12 +432,14 @@ public class StoryTrackerService {
 			
 			System.out.println("\nThanks for playing! :) "
 					+ "You may now enter anything to play again or if you are done: type \"exit\" or close the terminal.");
-			ValidatePlayerInput(in, 0);
 			
-			// Reset
-			end = false;
-			chart = new Integer[] {0,0,0,0,0,0,0,0,0};
-			userTags.clear();
+			
 		}
+	}
+	
+	public void reset() {
+		end = false;
+		chart = new Integer[] {0,0,0,0,0,0,0,0,0};
+		userTags.clear();
 	}
 }

@@ -11,22 +11,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.knowtheyselfweb.Know_Thyself_WEB.models.Scenario;
 import com.knowthyselfweb.Know_Thyself_WEB.services.StoryService;
+import com.knowthyselfweb.Know_Thyself_WEB.services.StoryTrackerService;
 
 @Controller
 
 public class StoryController {
 	
-	//TODO turn into dependency injection
-	StoryService service = new StoryService();
-	
-	ArrayList<Scenario> scenes = service.getStory();
-	
-	Scenario curScene = scenes.get(0);
+	//TODO turn into dependency injections
+	StoryService story = new StoryService();
+	StoryTrackerService storyCon = new StoryTrackerService(story.getStory());
 	
 	@GetMapping("/playStart")
 	public String startStory(Model model) {
 		
-		Scenario beginning = scenes.get(0);
+		Scenario beginning = storyCon.GetCurrentScene();
 		
 		model.addAttribute("scene_desc", beginning.getDesc());
 		model.addAttribute("options", beginning.getOptions());
